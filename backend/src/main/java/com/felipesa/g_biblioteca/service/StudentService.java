@@ -28,4 +28,8 @@ public class StudentService {
 	public Student findByRegistration(Integer registration) {
 		return repository.findByRegistration(registration);
 	}
+	
+	public void insert(Student obj) throws IllegalArgumentException{
+		repository.save(obj);
+	}
 }
