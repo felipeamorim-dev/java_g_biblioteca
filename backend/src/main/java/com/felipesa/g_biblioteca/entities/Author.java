@@ -1,10 +1,12 @@
 package com.felipesa.g_biblioteca.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,7 +30,7 @@ public class Author implements Serializable{
 	
 	@JsonIgnore
 	@ManyToMany(mappedBy = "authors")
-	private Set<Book> books = new HashSet<>();
+	private List<Book> books = new ArrayList<>();
 	
 	public Author() {
 		
@@ -61,6 +63,14 @@ public class Author implements Serializable{
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	
+	public List<Book> getBooks() {
+		return books;
+	}
+
+	public void setBooks(List<Book> books) {
+		this.books = books;
 	}
 
 	@Override

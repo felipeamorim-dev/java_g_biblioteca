@@ -1,14 +1,12 @@
 package com.felipesa.g_biblioteca.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -17,25 +15,22 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_books")
-public class Book implements Serializable{
+public class Book implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@Column(nullable = false, unique = true)
 	private String isbn; // Será utilizado o isbn de 10 digitos para identificar os livros
 	private String name;
 	private Integer numberEdition;
 	private Integer copyright;
-	
+
 	@ManyToMany
-	@JoinTable(name = "tb_books_authors", 
-		joinColumns = @JoinColumn(name = "isbn"), 
-		inverseJoinColumns = @JoinColumn(name = "author_id"))
-	private Set<Author> authors = new HashSet<>();
+	@JoinTable(name = "tb_books_authors", joinColumns = @JoinColumn(name = "isbn", referencedColumnName = "isbn"), inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"))
+	private List<Author> authors = new ArrayList<>();
 
 	public Book() {
-
 	}
 
 	public Book(String isbn, String name, Integer numberEdition, Integer copyright) {
@@ -93,6 +88,5 @@ public class Book implements Serializable{
 		Book other = (Book) obj;
 		return Objects.equals(isbn, other.isbn);
 	}
-	
-	
+
 }
