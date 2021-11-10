@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -27,7 +28,9 @@ public class Book implements Serializable {
 	private Integer copyright;
 
 	@ManyToMany
-	@JoinTable(name = "tb_books_authors", joinColumns = @JoinColumn(name = "isbn", referencedColumnName = "isbn"), inverseJoinColumns = @JoinColumn(name = "author_id", referencedColumnName = "id"))
+	@JoinTable(name = "tb_books_authors", 
+		joinColumns = @JoinColumn(name = "isbn"), 
+		inverseJoinColumns = @JoinColumn(name = "author_id"))
 	private List<Author> authors = new ArrayList<>();
 
 	public Book() {
@@ -70,6 +73,10 @@ public class Book implements Serializable {
 
 	public void setCopyright(Integer copyright) {
 		this.copyright = copyright;
+	}
+	
+	public List<Author> getAuthors() {
+		return authors;
 	}
 
 	@Override
