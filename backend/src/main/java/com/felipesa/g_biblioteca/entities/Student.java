@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.lang.NonNull;
+
 @Entity
 @Table(name = "tb_student")
 public class Student implements Serializable{
@@ -18,9 +20,14 @@ public class Student implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private Integer registration;
+	
+	@NonNull
 	private String name;
+	@NonNull
 	private String course;
+	@NonNull
 	private Integer period;
 	
 	public Student() {
