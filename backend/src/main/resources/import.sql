@@ -53,3 +53,20 @@ INSERT INTO tb_books_authors (author_id, isbn) VALUES (2, '0132121360');
 INSERT INTO tb_books_authors (author_id, isbn) VALUES (3, '0132121360');
 INSERT INTO tb_books_authors (author_id, isbn) VALUES (5, '0132121360');
 
+INSERT INTO tb_section (name) VALUES ('Física');
+INSERT INTO tb_section (name) VALUES ('Matemática');
+INSERT INTO tb_section (name) VALUES ('Informática');
+INSERT INTO tb_section (name) VALUES ('Ciências Biológicas');
+INSERT INTO tb_section (name) VALUES ('Medicina');
+
+INSERT INTO tb_book_management (isbn_id, section_id, available_quantity, total_amount) VALUES ('0132151006', 3, 3, 5);
+INSERT INTO tb_book_management (isbn_id, section_id, available_quantity, total_amount) VALUES ('0133807800', 3, 9, 10);
+INSERT INTO tb_book_management (isbn_id, section_id, available_quantity, total_amount) VALUES ('0132575655', 3, 6, 6);
+INSERT INTO tb_book_management (isbn_id, section_id, available_quantity, total_amount) VALUES ('0132990440', 3, 5, 5);
+INSERT INTO tb_book_management (isbn_id, section_id, available_quantity, total_amount) VALUES ('0132990601', 3, 5, 5);
+INSERT INTO tb_book_management (isbn_id, section_id, available_quantity, total_amount) VALUES ('0133406954', 3, 5, 5);
+INSERT INTO tb_book_management (isbn_id, section_id, available_quantity, total_amount) VALUES ('0133379337', 3, 5, 5);
+INSERT INTO tb_book_management (isbn_id, section_id, available_quantity, total_amount) VALUES ('0136151574', 3, 5, 5);
+INSERT INTO tb_book_management (isbn_id, section_id, available_quantity, total_amount) VALUES ('0133378713', 3, 4, 5);
+INSERT INTO tb_book_management (isbn_id, section_id, available_quantity, total_amount) VALUES ('0133570924', 3, 4, 4);
+INSERT INTO tb_book_management (isbn_id, section_id, available_quantity, total_amount) VALUES ('0132121360', 3, 4, 4);
