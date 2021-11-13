@@ -1,17 +1,18 @@
 package com.felipesa.g_biblioteca.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_books")
@@ -25,21 +26,20 @@ public class Book implements Serializable {
 	private String name;
 	private Integer numberEdition;
 	private Integer copyright;
+	private String author;
 
-	@ManyToMany
-	@JoinTable(name = "tb_books_authors", 
-		joinColumns = @JoinColumn(name = "isbn"), 
-		inverseJoinColumns = @JoinColumn(name = "author_id"))
-	private List<Author> authors = new ArrayList<>();
+	@OneToMany(mappedBy = "id.book", cascade = CascadeType.ALL)
+	private Set<BookManagement> manager = new HashSet<>();
 
 	public Book() {
 	}
 
-	public Book(String isbn, String name, Integer numberEdition, Integer copyright) {
+	public Book(String isbn, String name, Integer numberEdition, Integer copyright, String author) {
 		this.isbn = isbn;
 		this.name = name;
 		this.numberEdition = numberEdition;
 		this.copyright = copyright;
+		this.setAuthor(author);
 	}
 
 	public String getIsbn() {
@@ -73,9 +73,18 @@ public class Book implements Serializable {
 	public void setCopyright(Integer copyright) {
 		this.copyright = copyright;
 	}
-	
-	public List<Author> getAuthors() {
-		return authors;
+
+	@JsonIgnore
+	public Set<BookManagement> getManager() {
+		return manager;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
 	}
 
 	@Override

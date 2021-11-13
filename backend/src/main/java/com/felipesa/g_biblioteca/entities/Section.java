@@ -1,12 +1,16 @@
 package com.felipesa.g_biblioteca.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,6 +23,9 @@ public class Section implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+
+	@OneToMany(mappedBy = "id.section", cascade = CascadeType.ALL)
+	private Set<BookManagement> manager = new HashSet<>();
 
 	public Section() {
 
@@ -42,6 +49,14 @@ public class Section implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Set<Book> getBooks() {
+		Set<Book> set = new HashSet<>();
+		for (BookManagement x : manager) {
+			set.add(x.getBook());
+		}
+		return set;
 	}
 
 	@Override

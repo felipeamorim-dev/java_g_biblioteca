@@ -17,7 +17,7 @@ import com.felipesa.g_biblioteca.service.SectionService;
 public class SectionController {
 	
 	@Autowired
-	private SectionService SectionService;
+	private SectionService sectionService;
 	
 	@GetMapping
 	public ResponseEntity<Page<SectionDTO>> findAll(
@@ -25,13 +25,13 @@ public class SectionController {
 			@RequestParam(name = "size", defaultValue = "3") Integer size){
 		
 		PageRequest pageRequest = PageRequest.of(page, size);
-		Page<SectionDTO> list = SectionService.findAll(pageRequest);
+		Page<SectionDTO> list = sectionService.findAll(pageRequest);
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<SectionDTO> findById(@PathVariable Long id){
-		SectionDTO obj = SectionService.findById(id);
+		SectionDTO obj = sectionService.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	

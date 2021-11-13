@@ -1,7 +1,10 @@
 package com.felipesa.g_biblioteca.entities.dto;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
+import com.felipesa.g_biblioteca.entities.Book;
 import com.felipesa.g_biblioteca.entities.Section;
 
 public class SectionDTO implements Serializable {
@@ -10,6 +13,8 @@ public class SectionDTO implements Serializable {
 	
 	private Long id;
 	private String name;
+	
+	private Set<Book> books = new HashSet<>();
 
 	public SectionDTO() {
 
@@ -22,6 +27,7 @@ public class SectionDTO implements Serializable {
 	public SectionDTO(Section obj) {
 		id = obj.getId();
 		name = obj.getName();
+		books = obj.getBooks();
 	}
 
 	public Long getId() {
@@ -38,6 +44,10 @@ public class SectionDTO implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Set<Book> getBooks() {
+		return books;
 	}
 
 }

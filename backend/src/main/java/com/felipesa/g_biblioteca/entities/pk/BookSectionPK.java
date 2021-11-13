@@ -1,10 +1,8 @@
 package com.felipesa.g_biblioteca.entities.pk;
 
 import java.io.Serializable;
-
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
 import com.felipesa.g_biblioteca.entities.Book;
 import com.felipesa.g_biblioteca.entities.Section;
 

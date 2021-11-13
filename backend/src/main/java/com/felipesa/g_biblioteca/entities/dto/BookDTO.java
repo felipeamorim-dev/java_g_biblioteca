@@ -1,24 +1,23 @@
 package com.felipesa.g_biblioteca.entities.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.felipesa.g_biblioteca.entities.Author;
 import com.felipesa.g_biblioteca.entities.Book;
 
-public class BookDTO implements Serializable{
+public class BookDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private String isbn;
 	private String name;
 	private Integer numberEdition;
 	private Integer copyright;
-	
-	private List<Author> authors = new ArrayList<>();
-	
+	private String author;
+	private Integer availableQuantity;
+	private Integer totalAmount;
+
+
 	public BookDTO() {
-		
+
 	}
 
 	public BookDTO(String isbn, String name, Integer numberEdition, Integer copyright) {
@@ -27,13 +26,24 @@ public class BookDTO implements Serializable{
 		this.numberEdition = numberEdition;
 		this.copyright = copyright;
 	}
-	
+
 	public BookDTO(Book book) {
 		isbn = book.getIsbn();
 		name = book.getName();
 		numberEdition = book.getNumberEdition();
 		copyright = book.getCopyright();
-		authors = book.getAuthors();
+		author = book.getAuthor();
+		setAvailableQuantity(book.getManager().stream()
+				.filter(x -> x.getBook().getIsbn() == isbn)
+				.findFirst()
+				.get()
+				.getAvailableQuantity());
+		setTotalAmount(book.getManager().stream()
+				.filter(x -> x.getBook().getIsbn() == isbn)
+				.findFirst()
+				.get()
+				.getTotalAmount());
+		
 	}
 
 	public String getIsbn() {
@@ -68,8 +78,28 @@ public class BookDTO implements Serializable{
 		this.copyright = copyright;
 	}
 
-	public List<Author> getAuthors() {
-		return authors;
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public Integer getAvailableQuantity() {
+		return availableQuantity;
+	}
+
+	public void setAvailableQuantity(Integer availableQuantity) {
+		this.availableQuantity = availableQuantity;
+	}
+
+	public Integer getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(Integer totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 
 }

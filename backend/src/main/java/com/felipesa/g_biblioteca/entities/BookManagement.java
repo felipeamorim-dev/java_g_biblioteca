@@ -20,12 +20,12 @@ public class BookManagement implements Serializable {
 	private Integer availableQuantity;
 	private Integer totalAmount;
 
-	
 	public BookManagement() {
 
 	}
 
 	public BookManagement(Book book, Section section, Integer availableQuantity, Integer totalAmount) {
+		super();
 		this.availableQuantity = availableQuantity;
 		this.totalAmount = totalAmount;
 		id.setBook(book);
@@ -38,6 +38,14 @@ public class BookManagement implements Serializable {
 	
 	public void setBook(Book book) {
 		id.setBook(book);
+	}
+	
+	public Section getSection() {
+		return id.getSection();
+	}
+	
+	public void setSection(Section section) {
+		id.setSection(section);
 	}
 
 	public Integer getAvailableQuantity() {
