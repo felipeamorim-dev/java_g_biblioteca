@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,9 +32,8 @@ public class Loan implements Serializable {
 	private Student student;
 
 	private StatusEnum status;
-
-	@OneToMany
-	@JoinColumn(name = "bookLoan_id")
+	
+	@OneToMany(mappedBy = "id.loan", cascade = CascadeType.ALL)
 	private Set<BookLoan> bookLoan = new HashSet<>();
 
 	public Loan() {

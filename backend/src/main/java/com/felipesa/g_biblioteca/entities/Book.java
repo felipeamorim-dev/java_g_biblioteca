@@ -31,6 +31,9 @@ public class Book implements Serializable {
 	@OneToMany(mappedBy = "id.book", cascade = CascadeType.ALL)
 	private Set<BookManagement> manager = new HashSet<>();
 
+	@OneToMany(mappedBy = "id.loan", cascade = CascadeType.ALL)
+	private Set<BookLoan> bookLoan = new HashSet<>();
+
 	public Book() {
 	}
 
@@ -85,6 +88,11 @@ public class Book implements Serializable {
 
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+	
+	@JsonIgnore
+	public Set<BookLoan> getBookLoan() {
+		return bookLoan;
 	}
 
 	@Override

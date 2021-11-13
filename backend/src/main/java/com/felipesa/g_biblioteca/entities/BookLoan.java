@@ -2,60 +2,41 @@ package com.felipesa.g_biblioteca.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.felipesa.g_biblioteca.entities.pk.BookLoanPK;
+
 @Entity
 @Table(name = "tb_book_loan")
-public class BookLoan implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
+public class BookLoan implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private static final long serialVersionUID = 1L;
 	
+	@EmbeddedId
+	private BookLoanPK id = new BookLoanPK();
+
 	@Temporal(value = TemporalType.TIMESTAMP)
 	@Column(nullable = false)
 	private Date loanDate;
-	
+
 	@Temporal(value = TemporalType.TIMESTAMP)
 	@Column(nullable = false)
 	private Date returnDate;
-	
-	@OneToOne
-	@JoinColumn(name = "book_isbn")
-	private Book bookLoan;
-	
-	
+
 	public BookLoan() {
-		
+
 	}
 
-	public BookLoan(Long id, Date loanDate, Date returnDate, Book bookLoan) {
-		super();
-		this.id = id;
+	public BookLoan(Long id, Date loanDate, Date returnDate, Book book) {
 		this.loanDate = loanDate;
 		this.returnDate = returnDate;
-		this.bookLoan = bookLoan;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
+		
 	}
 
 	public Date getLoanDate() {
@@ -74,29 +55,4 @@ public class BookLoan implements Serializable{
 		this.returnDate = returnDate;
 	}
 
-	public Book getBookLoan() {
-		return bookLoan;
-	}
-
-	public void setBookLoan(Book bookLoan) {
-		this.bookLoan = bookLoan;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		BookLoan other = (BookLoan) obj;
-		return Objects.equals(id, other.id);
-	}
-	
 }
