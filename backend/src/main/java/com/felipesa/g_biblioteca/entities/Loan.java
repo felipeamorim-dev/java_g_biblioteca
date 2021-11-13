@@ -2,6 +2,7 @@ package com.felipesa.g_biblioteca.entities;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -13,37 +14,35 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.felipesa.g_biblioteca.entities_interface.BookManagerInterface;
 import com.felipesa.g_biblioteca.enumtype.StatusEnum;
-
 
 @Entity
 @Table(name = "tb_loan")
-public class Loan implements BookManagerInterface , Serializable{
-	
+public class Loan implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "student_id")
 	private Student student;
-	
+
 	private StatusEnum status;
-	
+
 	@OneToMany
 	@JoinColumn(name = "bookLoan_id")
 	private Set<BookLoan> bookLoan = new HashSet<>();
-	
+
 	public Loan() {
-		
+
 	}
-	
+
 	public Loan(Student student, StatusEnum status, Set<BookLoan> bookLoan) {
 		this.student = student;
-		this.status = status;
+		this.setStatus(status);
 		this.bookLoan = bookLoan;
 	}
 
@@ -71,16 +70,25 @@ public class Loan implements BookManagerInterface , Serializable{
 		this.bookLoan = bookLoan;
 	}
 
-	@Override
-	public void updateAmountBook() {
-		//TODO: Realizar a atualização do estoque de livros
-		
+	public void setStatus(StatusEnum status) {
+		this.status = status;
 	}
 
 	@Override
-	public void updateStatusLoan(StatusEnum status) {
-		this.status = status;
-		
+	public int hashCode() {
+		return Objects.hash(id);
 	}
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Loan other = (Loan) obj;
+		return Objects.equals(id, other.id);
+	}
+
 }
