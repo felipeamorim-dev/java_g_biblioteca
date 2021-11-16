@@ -33,6 +33,7 @@ public class LoanService {
 	
 	public LoanDTO findById(Long id) {
 		Loan loan = loanRepository.getById(id);
+		loan.getStudent().getLoan().size();
 		return new LoanDTO(loan);
 	}
 	

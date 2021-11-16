@@ -44,7 +44,7 @@ public class StudentController {
 	@GetMapping(value = "/registration/{registration}")
 	public ResponseEntity<StudentDTO> findByRegistration(@PathVariable Integer registration) {
 		StudentDTO obj = studentService.findByRegistration(registration);
-		obj = studentService.findById(obj.getId());
+		//obj = studentService.findById(obj.getId());
 		return ResponseEntity.ok(obj);
 	}
 	

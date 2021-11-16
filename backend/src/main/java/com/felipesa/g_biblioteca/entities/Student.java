@@ -16,6 +16,8 @@ import javax.persistence.Table;
 
 import org.springframework.lang.NonNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "tb_student")
 public class Student implements Serializable {
@@ -92,6 +94,7 @@ public class Student implements Serializable {
 		this.period = period;
 	}
 	
+	@JsonIgnore
 	public List<Loan> getLoan() {
 		return loan;
 	}
