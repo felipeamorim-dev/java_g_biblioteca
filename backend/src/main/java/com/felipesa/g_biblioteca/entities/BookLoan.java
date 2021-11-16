@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.felipesa.g_biblioteca.entities.pk.BookLoanPK;
 
 @Entity
@@ -50,7 +51,8 @@ public class BookLoan implements Serializable {
 		this.loanDate = loanDate;
 		this.returnDate = returnDate;
 	}
-
+	
+	@JsonIgnore
 	public BookLoanPK getId() {
 		return id;
 	}
@@ -58,7 +60,7 @@ public class BookLoan implements Serializable {
 	public void setId(BookLoanPK id) {
 		this.id = id;
 	}
-
+	
 	public Book getBook() {
 		return book;
 	}
@@ -66,7 +68,8 @@ public class BookLoan implements Serializable {
 	public void setBook(Book book) {
 		this.book = book;
 	}
-
+	
+	@JsonIgnore
 	public Loan getLoan() {
 		return loan;
 	}

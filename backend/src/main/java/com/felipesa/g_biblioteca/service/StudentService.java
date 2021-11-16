@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.felipesa.g_biblioteca.entities.Student;
 import com.felipesa.g_biblioteca.entities.dto.StudentDTO;
@@ -13,6 +14,7 @@ import com.felipesa.g_biblioteca.repository.StudentRepository;
 import com.felipesa.g_biblioteca.service.exceptions.ResourceNotFoundException;
 
 @Service
+@Transactional
 public class StudentService {
 	
 	@Autowired
@@ -26,11 +28,14 @@ public class StudentService {
 	
 	public StudentDTO findById(Long id) {
 		Optional<Student> obj =  repository.findById(id);
+		obj.get().getLoan().size();
 		return new StudentDTO(obj.orElseThrow(() -> new ResourceNotFoundException(id)));
 	}
 	
 	public StudentDTO findByRegistration(Integer registration) {
-		return new StudentDTO(repository.findByRegistration(registration));
+		Student obj = repository.findByRegistration(registration);
+		obj.getLoan().size();
+		return new StudentDTO(obj);
 	}
 	
 	public void insert(Student obj){

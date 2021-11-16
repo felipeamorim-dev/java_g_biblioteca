@@ -9,6 +9,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.felipesa.g_biblioteca.enumtype.StatusEnum;
 
 @Entity
@@ -36,7 +38,7 @@ public class Loan implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private StatusEnum status;
 	
-	@OneToMany(mappedBy = "id.loan", cascade = {CascadeType.PERSIST , CascadeType.MERGE})
+	@OneToMany(mappedBy = "id.loan", cascade = {CascadeType.PERSIST , CascadeType.MERGE}, fetch = FetchType.EAGER)
 	private List<BookLoan> bookLoan = new ArrayList<>();
 
 	public Loan() {
@@ -56,7 +58,8 @@ public class Loan implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	
+	@JsonIgnore
 	public Student getStudent() {
 		return student;
 	}

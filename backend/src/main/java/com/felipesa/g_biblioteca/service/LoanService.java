@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.felipesa.g_biblioteca.entities.BookLoan;
 import com.felipesa.g_biblioteca.entities.BookManagement;
 import com.felipesa.g_biblioteca.entities.Loan;
+import com.felipesa.g_biblioteca.entities.dto.LoanDTO;
 import com.felipesa.g_biblioteca.enumtype.StatusEnum;
 import com.felipesa.g_biblioteca.repository.BookLoanRepository;
 import com.felipesa.g_biblioteca.repository.BookManagementRepository;
@@ -17,6 +18,7 @@ import com.felipesa.g_biblioteca.repository.LoanRepository;
 
 
 @Service
+@Transactional
 public class LoanService {
 	
 	@Autowired
@@ -28,11 +30,13 @@ public class LoanService {
 	@Autowired
 	private BookManagementRepository bmRepository;
 	
-	public Loan findById(Long id) {
-		return loanRepository.getById(id);
+	
+	public LoanDTO findById(Long id) {
+		Loan loan = loanRepository.getById(id);
+		return new LoanDTO(loan);
 	}
 	
-	@Transactional
+	
 	public void insertLoan(Loan loan, List<BookLoan> bookLoan) {
 		BookManagement bmanager = new BookManagement();
 		
@@ -48,10 +52,10 @@ public class LoanService {
 		}
 	}
 	
-	@Transactional
+	
 	public Loan update(Long id, StatusEnum status) {
 		BookManagement bmanager = new BookManagement();
-		Loan loan = findById(id);
+		Loan loan = loanRepository.getById(id);
 		loan.setStatus(status);
 		try {
 			

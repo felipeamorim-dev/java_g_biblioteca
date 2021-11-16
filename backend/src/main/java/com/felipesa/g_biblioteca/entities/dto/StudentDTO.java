@@ -1,7 +1,10 @@
 package com.felipesa.g_biblioteca.entities.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.felipesa.g_biblioteca.entities.Loan;
 import com.felipesa.g_biblioteca.entities.Student;
 
 public class StudentDTO implements Serializable {
@@ -13,6 +16,7 @@ public class StudentDTO implements Serializable {
 	private String name;
 	private String course;
 	private Integer period;
+	private List<Loan> loan = new ArrayList<>();
 
 	public StudentDTO() {
 
@@ -31,6 +35,7 @@ public class StudentDTO implements Serializable {
 		name = obj.getName();
 		course = obj.getCourse();
 		period = obj.getPeriod();
+		loan = obj.getLoan();
 	}
 
 	public Long getId() {
@@ -71,6 +76,14 @@ public class StudentDTO implements Serializable {
 
 	public void setPeriod(Integer period) {
 		this.period = period;
+	}
+
+	public List<Loan> getLoan() {
+		return loan;
+	}
+
+	public void setLoan(List<Loan> loan) {
+		this.loan = loan;
 	}
 
 }

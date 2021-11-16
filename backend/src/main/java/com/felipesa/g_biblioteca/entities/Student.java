@@ -1,39 +1,46 @@
 package com.felipesa.g_biblioteca.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.lang.NonNull;
 
 @Entity
 @Table(name = "tb_student")
-public class Student implements Serializable{
+public class Student implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false)
 	private Integer registration;
-	
+
 	@NonNull
 	private String name;
 	@NonNull
 	private String course;
 	@NonNull
 	private Integer period;
-	
+
+	@OneToMany(mappedBy = "student", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	private List<Loan> loan = new ArrayList<>();
+
 	public Student() {
-		
+
 	}
 
 	public Student(Long id, Integer registration, String name, String course, Integer period) {
@@ -84,6 +91,10 @@ public class Student implements Serializable{
 	public void setPeriod(Integer period) {
 		this.period = period;
 	}
+	
+	public List<Loan> getLoan() {
+		return loan;
+	}
 
 	@Override
 	public int hashCode() {
@@ -101,5 +112,4 @@ public class Student implements Serializable{
 		Student other = (Student) obj;
 		return Objects.equals(id, other.id);
 	}
-	
 }
