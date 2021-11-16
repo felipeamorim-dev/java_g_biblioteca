@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.felipesa.g_biblioteca.entities.dto.SectionDTO;
 import com.felipesa.g_biblioteca.service.SectionService;
 
@@ -17,7 +18,7 @@ import com.felipesa.g_biblioteca.service.SectionService;
 public class SectionController {
 	
 	@Autowired
-	private SectionService sectionService;
+	private SectionService service;
 	
 	@GetMapping
 	public ResponseEntity<Page<SectionDTO>> findAll(
@@ -25,13 +26,13 @@ public class SectionController {
 			@RequestParam(name = "size", defaultValue = "3") Integer size){
 		
 		PageRequest pageRequest = PageRequest.of(page, size);
-		Page<SectionDTO> list = sectionService.findAll(pageRequest);
+		Page<SectionDTO> list = service.findAll(pageRequest);
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<SectionDTO> findById(@PathVariable Long id){
-		SectionDTO obj = sectionService.findById(id);
+		SectionDTO obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	

@@ -14,7 +14,7 @@ public class BookDTO implements Serializable {
 	private String author;
 	private Integer availableQuantity;
 	private Integer totalAmount;
-
+	private String section;
 
 	public BookDTO() {
 
@@ -43,7 +43,11 @@ public class BookDTO implements Serializable {
 				.findFirst()
 				.get()
 				.getTotalAmount());
-		
+		setSection(book.getManager().stream()
+				.filter(x -> x.getBook().getIsbn() == isbn)
+				.findFirst()
+				.get()
+				.getSection().getName());
 	}
 
 	public String getIsbn() {
@@ -100,6 +104,14 @@ public class BookDTO implements Serializable {
 
 	public void setTotalAmount(Integer totalAmount) {
 		this.totalAmount = totalAmount;
+	}
+
+	public String getSection() {
+		return section;
+	}
+
+	public void setSection(String section) {
+		this.section = section;
 	}
 
 }

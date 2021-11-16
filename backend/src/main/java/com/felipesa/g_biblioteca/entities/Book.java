@@ -28,10 +28,10 @@ public class Book implements Serializable {
 	private Integer copyright;
 	private String author;
 
-	@OneToMany(mappedBy = "id.book", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "id.book", cascade = CascadeType.PERSIST)
 	private Set<BookManagement> manager = new HashSet<>();
 
-	@OneToMany(mappedBy = "id.loan", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "id.loan", cascade = CascadeType.PERSIST)
 	private Set<BookLoan> bookLoan = new HashSet<>();
 
 	public Book() {

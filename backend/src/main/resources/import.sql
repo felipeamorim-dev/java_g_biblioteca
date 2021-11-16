@@ -38,3 +38,9 @@ INSERT INTO tb_book_management (isbn_id, section_id, available_quantity, total_a
 INSERT INTO tb_book_management (isbn_id, section_id, available_quantity, total_amount) VALUES ('0133570924', 3, 4, 4);
 INSERT INTO tb_book_management (isbn_id, section_id, available_quantity, total_amount) VALUES ('0132121360', 3, 4, 4);
 
+INSERT INTO tb_loan(status, student_id) VALUES ('BORROWED', 1)
+INSERT INTO tb_loan(status, student_id) VALUES ('BORROWED', 2)
+
+INSERT INTO tb_book_loan(book_isbn, loan_id, loan_date, return_date) VALUES ('0133807800', 1, '2021-03-05', '2021-04-05');
+INSERT INTO tb_book_loan(book_isbn, loan_id, loan_date, return_date) VALUES ('0133378713', 1, '2021-03-05', '2021-03-25');
+INSERT INTO tb_book_loan(book_isbn, loan_id, loan_date, return_date) VALUES ('0132151006', 2, '2021-03-05', '2021-03-25');

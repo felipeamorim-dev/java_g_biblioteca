@@ -1,43 +1,55 @@
 package com.felipesa.g_biblioteca.entities.pk;
 
 import java.io.Serializable;
+import java.util.Objects;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import com.felipesa.g_biblioteca.entities.Book;
-import com.felipesa.g_biblioteca.entities.Loan;
+import javax.persistence.Column;
 
 public class BookLoanPK implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne
-	@JoinColumn(name = "book_isbn")
-	private Book book;
+	@Column(name = "book_isbn")
+	private String book;
 
-	@ManyToOne
-	@JoinColumn(name = "loan_id")
-	private Loan loan;
+	@Column(name = "loan_id")
+	private Long loan;
 
 	public BookLoanPK() {
 
 	}
 
-	public Book getBook() {
+	public String getBook() {
 		return book;
 	}
 
-	public void setBook(Book book) {
+	public void setBook(String book) {
 		this.book = book;
 	}
 
-	public Loan getLoan() {
+	public Long getLoan() {
 		return loan;
 	}
 
-	public void setLoan(Loan loan) {
+	public void setLoan(Long loan) {
 		this.loan = loan;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(book, loan);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		BookLoanPK other = (BookLoanPK) obj;
+		return Objects.equals(book, other.book) && Objects.equals(loan, other.loan);
 	}
 
 }

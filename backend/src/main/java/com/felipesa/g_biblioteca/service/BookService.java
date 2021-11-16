@@ -23,8 +23,10 @@ public class BookService {
 		return listBooks.map(x -> new BookDTO(x));
 	}
 	
+	@Transactional(readOnly = true)
 	public BookDTO findById(String isbn) {
 		Optional<Book> obj =  repository.findById(isbn);
+		obj.get().getManager().size(); //operação para inicializar a lista responsavél pela atribuição entre as tabelas de junção dos livros e seção.
 		return new BookDTO(obj.orElseThrow(() -> new ResourceNotFoundException(isbn)));
 	}
 	

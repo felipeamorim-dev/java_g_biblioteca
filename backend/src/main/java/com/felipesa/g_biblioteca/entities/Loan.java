@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,10 +32,11 @@ public class Loan implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "student_id")
 	private Student student;
-
+	
+	@Enumerated(EnumType.STRING)
 	private StatusEnum status;
 	
-	@OneToMany(mappedBy = "id.loan", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "id.loan", cascade = CascadeType.PERSIST)
 	private Set<BookLoan> bookLoan = new HashSet<>();
 
 	public Loan() {
