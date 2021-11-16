@@ -1,9 +1,9 @@
 package com.felipesa.g_biblioteca.entities;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -36,14 +36,14 @@ public class Loan implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private StatusEnum status;
 	
-	@OneToMany(mappedBy = "id.loan", cascade = CascadeType.PERSIST)
-	private Set<BookLoan> bookLoan = new HashSet<>();
+	@OneToMany(mappedBy = "id.loan", cascade = {CascadeType.PERSIST , CascadeType.MERGE})
+	private List<BookLoan> bookLoan = new ArrayList<>();
 
 	public Loan() {
 
 	}
 
-	public Loan(Student student, StatusEnum status, Set<BookLoan> bookLoan) {
+	public Loan(Student student, StatusEnum status, List<BookLoan> bookLoan) {
 		this.student = student;
 		this.setStatus(status);
 		this.bookLoan = bookLoan;
@@ -69,12 +69,16 @@ public class Loan implements Serializable {
 		return status;
 	}
 
-	public void setBookLoan(Set<BookLoan> bookLoan) {
-		this.bookLoan = bookLoan;
-	}
-
 	public void setStatus(StatusEnum status) {
 		this.status = status;
+	}
+	
+	public List<BookLoan> getBookLoan() {
+		return bookLoan;
+	}
+	
+	public void setBookLoan(List<BookLoan> bookLoan) {
+		this.bookLoan = bookLoan;
 	}
 
 	@Override

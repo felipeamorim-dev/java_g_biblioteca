@@ -46,10 +46,9 @@ public class BookLoan implements Serializable {
 
 	}
 
-	public BookLoan(Long id, Date loanDate, Date returnDate, Book book) {
+	public BookLoan(Date loanDate, Date returnDate) {
 		this.loanDate = loanDate;
 		this.returnDate = returnDate;
-		
 	}
 
 	public BookLoanPK getId() {

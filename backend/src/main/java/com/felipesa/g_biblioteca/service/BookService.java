@@ -1,15 +1,14 @@
 package com.felipesa.g_biblioteca.service;
 
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.felipesa.g_biblioteca.entities.Book;
 import com.felipesa.g_biblioteca.entities.dto.BookDTO;
 import com.felipesa.g_biblioteca.repository.BookRepository;
-import com.felipesa.g_biblioteca.service.exceptions.ResourceNotFoundException;
 
 @Service
 public class BookService {
@@ -24,10 +23,10 @@ public class BookService {
 	}
 	
 	@Transactional(readOnly = true)
-	public BookDTO findById(String isbn) {
-		Optional<Book> obj =  repository.findById(isbn);
-		obj.get().getManager().size(); //operação para inicializar a lista responsavél pela atribuição entre as tabelas de junção dos livros e seção.
-		return new BookDTO(obj.orElseThrow(() -> new ResourceNotFoundException(isbn)));
+	public BookDTO findByIsbn(String isbn) {
+		Book obj =  repository.findByIsbn(isbn);
+		obj.getManager().size(); //operação para inicializar a lista responsavél pela atribuição entre as tabelas de junção dos livros e seção.
+		return new BookDTO(obj);
 	}
 	
 }

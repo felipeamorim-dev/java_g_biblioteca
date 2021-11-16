@@ -2,14 +2,13 @@ package com.felipesa.g_biblioteca.entities.pk;
 
 import java.io.Serializable;
 
-import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.felipesa.g_biblioteca.entities.Book;
 import com.felipesa.g_biblioteca.entities.Section;
 
-@Embeddable
+
 public class BookSectionPK implements Serializable{
 
 	private static final long serialVersionUID = 1L;

@@ -20,16 +20,6 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 	
-//	@Autowired
-//	private BookManagementRepository manager;
-//	
-//	@GetMapping(value = "/manager")
-//	public ResponseEntity<List<Book>> find() {
-//		List<Book> obj = manager.findAll();
-//		
-//		return ResponseEntity.ok(obj);
-//	}
-	
 	@GetMapping
 	public ResponseEntity<Page<BookDTO>> findAll(
 			@RequestParam(name = "page", defaultValue = "0") Integer page,
@@ -41,8 +31,8 @@ public class BookController {
 	}
 	
 	@GetMapping(value = "/{isbn}")
-	public ResponseEntity<BookDTO> findAById(@PathVariable String isbn){
-		BookDTO obj = bookService.findById(isbn);
+	public ResponseEntity<BookDTO> findByIsbn(@PathVariable String isbn){
+		BookDTO obj = bookService.findByIsbn(isbn);
 		return ResponseEntity.ok().body(obj);
 	}
 	

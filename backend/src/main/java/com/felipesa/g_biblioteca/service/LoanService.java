@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.felipesa.g_biblioteca.entities.BookLoan;
 import com.felipesa.g_biblioteca.entities.BookManagement;
 import com.felipesa.g_biblioteca.entities.Loan;
+import com.felipesa.g_biblioteca.enumtype.StatusEnum;
 import com.felipesa.g_biblioteca.repository.BookLoanRepository;
 import com.felipesa.g_biblioteca.repository.BookManagementRepository;
 import com.felipesa.g_biblioteca.repository.LoanRepository;
@@ -22,22 +23,52 @@ public class LoanService {
 	private LoanRepository loanRepository;
 	
 	@Autowired
-	private BookLoanRepository bookLoanRepository;
+	private BookLoanRepository blRepository;
 	
 	@Autowired
-	private BookManagementRepository managerRepository;
+	private BookManagementRepository bmRepository;
+	
+	public Loan findById(Long id) {
+		return loanRepository.getById(id);
+	}
 	
 	@Transactional
 	public void insertLoan(Loan loan, List<BookLoan> bookLoan) {
-		loanRepository.save(loan);
-		bookLoanRepository.saveAll(bookLoan);
+		BookManagement bmanager = new BookManagement();
 		
-		for(BookLoan x : bookLoan) {
-			BookManagement obj = managerRepository.findByIsbn(x.getBook().getIsbn());
-			int result = obj.getAvailableQuantity() - 1;
-			obj.setAvailableQuantity(result);
-			managerRepository.save(obj);
+		loanRepository.save(loan);
+		
+		blRepository.saveAll(bookLoan);
+		
+		for (BookLoan bl : bookLoan) {
+			bmanager = bl.getBook().getManager().stream().filter(x -> x.getBook().getIsbn().contains(bl.getBook().getIsbn())).findFirst().get();
+			int amount = bmanager.getAvailableQuantity() - 1;
+			bmanager.setAvailableQuantity(amount);
+			bmRepository.save(bmanager);
+		}
+	}
+	
+	@Transactional
+	public Loan update(Long id, StatusEnum status) {
+		BookManagement bmanager = new BookManagement();
+		Loan loan = findById(id);
+		loan.setStatus(status);
+		try {
+			
+		if(status == StatusEnum.RETURNED) {
+			for(BookLoan bl : loan.getBookLoan()) {
+				bmanager = bmRepository.getById(bl.getBook().getIsbn());
+				int amount = bmanager.getAvailableQuantity() + 1;
+				bmanager.setAvailableQuantity(amount);
+				bmRepository.save(bmanager);
+			}
 		}
 		
+		loanRepository.save(loan);
+			
+		} catch (RuntimeException e) {
+			e.getStackTrace();
+		}
+		return loan;
 	}
 }
