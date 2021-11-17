@@ -37,19 +37,21 @@ public class LoanService {
 		return new LoanDTO(loan);
 	}
 	
-	
 	public void insertLoan(Loan loan, List<BookLoan> bookLoan) {
 		BookManagement bmanager = new BookManagement();
-		
-		loanRepository.save(loan);
-		
-		blRepository.saveAll(bookLoan);
-		
-		for (BookLoan bl : bookLoan) {
-			bmanager = bl.getBook().getManager().stream().filter(x -> x.getBook().getIsbn().contains(bl.getBook().getIsbn())).findFirst().get();
-			int amount = bmanager.getAvailableQuantity() - 1;
-			bmanager.setAvailableQuantity(amount);
-			bmRepository.save(bmanager);
+		try {
+			loanRepository.save(loan);
+			blRepository.saveAll(bookLoan);
+			
+			for (BookLoan bl : bookLoan) {
+				bmanager = bl.getBook().getManager().stream().filter(x -> x.getBook().getIsbn().contains(bl.getBook().getIsbn())).findFirst().get();
+				int amount = bmanager.getAvailableQuantity() - 1;
+				bmanager.setAvailableQuantity(amount);
+				bmRepository.save(bmanager);
+			}
+			
+		} catch (RuntimeException e) {
+			e.getStackTrace();
 		}
 	}
 	

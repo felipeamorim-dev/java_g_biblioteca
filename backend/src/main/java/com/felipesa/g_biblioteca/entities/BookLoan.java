@@ -3,6 +3,7 @@ package com.felipesa.g_biblioteca.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -26,12 +27,12 @@ public class BookLoan implements Serializable {
 	private BookLoanPK id = new BookLoanPK();
 	
 	@MapsId("book")
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "book_isbn")
 	private Book book;
 	
 	@MapsId("loan")
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "loan_id")
 	private Loan loan;
 
@@ -50,6 +51,13 @@ public class BookLoan implements Serializable {
 	public BookLoan(Date loanDate, Date returnDate) {
 		this.loanDate = loanDate;
 		this.returnDate = returnDate;
+	}
+	
+	public BookLoan(Loan loan, Book book, Date loanDate, Date returnDate) {
+		this.loanDate = loanDate;
+		this.returnDate = returnDate;
+		setBook(book);
+		setLoan(loan);
 	}
 	
 	@JsonIgnore

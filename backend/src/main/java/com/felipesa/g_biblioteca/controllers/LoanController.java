@@ -1,5 +1,6 @@
 package com.felipesa.g_biblioteca.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +30,11 @@ public class LoanController {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	//TODO: O MÉTODO NÃO ESTÁ INSERINDO CORRETAMENTE OS VALORES PARA A ENTIDADE LOAN
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody Loan loan,@RequestBody List<BookLoan> bookLoan){
+	public ResponseEntity<Void> insert(@RequestBody Loan loan){
+		List<BookLoan> bookLoan = new ArrayList<>();
+		bookLoan = loan.getBookLoan();
 		loanService.insertLoan(loan, bookLoan);
 		return ResponseEntity.noContent().build();
 	}

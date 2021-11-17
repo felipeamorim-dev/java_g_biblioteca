@@ -20,7 +20,7 @@ public class StudentService {
 	@Autowired
 	private StudentRepository repository;
 	
-	
+	//TODO: Verificar o problema de inicialização da lista de livros emprestados
 	public Page<StudentDTO> findAll(Pageable pageable) {
 		Page<Student> list = repository.findAll(pageable);
 		return list.map(x -> new StudentDTO(x));
@@ -39,27 +39,50 @@ public class StudentService {
 	}
 	
 	public void insert(Student obj){
-		repository.save(obj);
+		try {
+			repository.save(obj);
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public StudentDTO update(Integer registration, Student student) {
-		Student obj = repository.findByRegistration(registration);
-		updateStudent(obj, student);
-		return new StudentDTO(obj);
+		try {
+			Student obj = repository.findByRegistration(registration);
+			Student std = updateStudent(obj, student);
+			repository.save(std);
+			return new StudentDTO(std);
+			
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
 	}
 	
-	private void updateStudent(Student oldStudent, Student newStudent) {
+	private Student updateStudent(Student oldStudent, Student newStudent) {
 		if(newStudent.getName() != null) oldStudent.setName(newStudent.getName());
 		if(newStudent.getCourse() != null) oldStudent.setCourse(newStudent.getCourse());
-		if(newStudent.getPeriod() != null && newStudent.getPeriod() > 0 && newStudent.getPeriod() <= 10) oldStudent.setPeriod(newStudent.getPeriod());
+		if(newStudent.getPeriod() != null && newStudent.getPeriod() > 0 && newStudent.getPeriod() <= 10) 
+			oldStudent.setPeriod(newStudent.getPeriod());
+		
+		return oldStudent;
 	}
 	
 	public void deleteById(Long id) {
-		repository.deleteById(id);
+		try {
+			repository.deleteById(id);	
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void deleteByRegistration(Integer registration) {
-		Student obj = repository.findByRegistration(registration);
-		deleteById(obj.getId());
+		try {
+			Student obj = repository.findByRegistration(registration);
+			deleteById(obj.getId());
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+		}
 	}
 }

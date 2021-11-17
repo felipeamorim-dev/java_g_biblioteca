@@ -37,7 +37,7 @@ public class Student implements Serializable {
 	private String course;
 	@NonNull
 	private Integer period;
-
+	
 	@OneToMany(mappedBy = "student", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<Loan> loan = new ArrayList<>();
 
