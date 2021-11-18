@@ -84,7 +84,7 @@ public class LoanService {
 		}
 	}
 	
-	public void insertLoan(Loan loan, List<BookLoan> bookLoan) {
+	private void insertLoan(Loan loan, List<BookLoan> bookLoan) {
 		BookManagement bmanager = new BookManagement();
 		try {
 			loanRepository.save(loan);

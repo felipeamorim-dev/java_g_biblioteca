@@ -58,7 +58,7 @@ public class TestConfig implements CommandLineRunner{
 		loan.setStudent(stu);
 		loan.setStatus(StatusEnum.BORROWED);
 		
-		loanService.insertLoan(loan, list);
+//		loanService.insertLoan(loan, list);
 	}
 
 }

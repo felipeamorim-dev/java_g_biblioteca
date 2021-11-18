@@ -34,9 +34,11 @@ public class LoanController {
 		return ResponseEntity.noContent().build();
 	}
 	
+	
 	@PostMapping(path = "/create")
-	public void createLoan(@RequestBody Student std) {
+	public ResponseEntity<Void> createLoan(@RequestBody Student std) {
 		if(std != null) loanService.createLoan(std);
+		return ResponseEntity.noContent().build();
 	}
 	
 }
