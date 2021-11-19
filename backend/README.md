@@ -36,9 +36,9 @@ Com essa api é possivel realizar o cadastro dos estudantes e mapear os livros q
 
 ### Método POST
 
-* /students -> Realiza a persistencia dos dados do aluno no banco de dados da biblioteca.
-* /loan -> Adiciona livros como itens a serem emprestados
-* /loan/create -> Vincula o emprestimo ao aluno iserindo no banco de dados todas as informações pertinentes a transação realizada.
+* /students -> Realiza a persistencia dos dados do aluno no banco de dados da biblioteca. Os atributos que devem compor o corpo do método são: registro, nome, curso e período.
+* /loan -> Adiciona livros como itens a serem emprestados. No corpo do método deve conter pelo menois o isbn do livro para que internamente seja referenciado corretamento o livro que deseja adiciona a lista de livros emprestados.
+* /loan/create -> Vincula o emprestimo ao aluno iserindo no banco de dados todas as informações pertinentes a transação realizada. Obs: A transação será realizada quando a lista de livros a emprestar não for nula.
 
 
 

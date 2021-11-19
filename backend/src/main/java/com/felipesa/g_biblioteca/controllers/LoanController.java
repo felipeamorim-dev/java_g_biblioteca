@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.felipesa.g_biblioteca.entities.Student;
 import com.felipesa.g_biblioteca.entities.dto.BookLoanDTO;
 import com.felipesa.g_biblioteca.entities.dto.LoanDTO;
+import com.felipesa.g_biblioteca.service.CarService;
 import com.felipesa.g_biblioteca.service.LoanService;
 
 @RestController
@@ -20,6 +21,8 @@ public class LoanController {
 	
 	@Autowired
 	private LoanService loanService;
+	@Autowired
+	private CarService carService;
 	
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<LoanDTO> findById(@PathVariable Long id){
@@ -38,7 +41,11 @@ public class LoanController {
 	@PostMapping(path = "/create")
 	public ResponseEntity<Void> createLoan(@RequestBody Student std) {
 		if(std != null) loanService.createLoan(std);
-		return ResponseEntity.noContent().build();
+		if(carService.findAll().isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}else {
+			return ResponseEntity.noContent().build();
+		}
 	}
 	
 }
