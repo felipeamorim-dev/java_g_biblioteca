@@ -13,7 +13,7 @@ Com essa api é possivel realizar o cadastro dos estudantes e mapear os livros q
 - Linguagem Java
 - Framework Spring Boot
 - Maven
-- Banco de dados H2 e MySql
+- Banco de dados H2 e PostgreSQL
 - Postman
 
 
@@ -54,3 +54,26 @@ Com essa api é possivel realizar o cadastro dos estudantes e mapear os livros q
 * /students/{registration} -> Retira do banco de dados as informações sobre o aluno.
 
  
+
+### Instalação
+
+Para realizar a instalação do projeto no perfil de  testar basta realizar realizar o build utilizando o maven, como a seguir:
+
+```java
+mvn clean package
+```
+
+Execute o comando a partir da raiz do projeto. Após finalizar o processo de build, o arquivo jar da aplicação estará na pasta target. Com esse arquivo basta executar o comando
+
+```java
+Java -jar [nome_do_arquivo.jar]
+```
+
+para rodar a aplicação. 
+
+No perfil de teste é utilizado o banco de dados H2 eno mesmo já possui alguns livros cadastrados para realizar os testes das funcionalidades da api. Para utilizar o PostgreSQL é necessário modificar para dev o perfil de desenvolvimento e modificar o arquivo application-dev.properties. É necessário criar o banco no Postegre (gbibli) e popular a tabelas de livros e seu estoque, como feito na versão de teste. 
+
+Uma observação importante. Esse já possui todas as dependências necessárias para que a aplicação rode, inclusive o servidor tomcat embarcado.
+
+
+
