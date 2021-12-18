@@ -17,17 +17,12 @@ import com.felipesa.g_biblioteca.entities.Student;
 import com.felipesa.g_biblioteca.enumtype.StatusEnum;
 import com.felipesa.g_biblioteca.repository.BookRepository;
 import com.felipesa.g_biblioteca.repository.StudentRepository;
-import com.felipesa.g_biblioteca.service.LoanService;
 
 @Transactional
 @Configuration
 @Profile("test")
 public class TestConfig implements CommandLineRunner{
 
-	
-	
-	@Autowired
-	private LoanService loanService;
 	
 	@Autowired
 	private BookRepository bookRepository;

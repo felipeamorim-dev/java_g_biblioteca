@@ -18,4 +18,8 @@ public class GlobalHandleException {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 	}
 	
+	@ExceptionHandler({ValidationErroException.class})
+	public ResponseEntity<?> handleValidationErroException(ValidationErroException e){
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+	}
 }

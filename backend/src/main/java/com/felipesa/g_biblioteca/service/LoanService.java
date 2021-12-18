@@ -50,6 +50,9 @@ public class LoanService {
 		return new LoanDTO(loan);
 	}
 	
+	
+	//TODO: Adicionar validação ne novos emprestimos para estudantes 
+	@Transactional
 	public void createLoan(Student std) {
 		Loan loan = new Loan();
 		List<BookLoan> list = new ArrayList<>();

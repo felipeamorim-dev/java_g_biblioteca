@@ -2,12 +2,14 @@ package com.felipesa.g_biblioteca.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.felipesa.g_biblioteca.entities.Car;
+import com.felipesa.g_biblioteca.entities.dto.ViewCarDTO;
 import com.felipesa.g_biblioteca.repository.CarRepository;
 import com.felipesa.g_biblioteca.service.exceptions.ResourceNotFoundException;
 
@@ -21,6 +23,11 @@ public class CarService {
 	//TODO: Verificar o problema de inicialização da lista de livros emprestados
 	public List<Car> findAll() {
 		return repository.findAll();
+	}
+	
+	public List<ViewCarDTO> getViewAllCar(){
+		List<Car> obj = repository.findAll();
+		return obj.stream().map(car -> new ViewCarDTO(car)).collect(Collectors.toList());
 	}
 	
 	public Car findById(Long id) {
