@@ -8,12 +8,15 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.lang.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -38,7 +41,9 @@ public class Student implements Serializable {
 	@NonNull
 	private Integer period;
 	
-	@OneToMany(mappedBy = "student", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OneToMany(mappedBy = "student", cascade = { CascadeType.PERSIST, CascadeType.MERGE }, 
+			fetch = FetchType.LAZY)
+	@Fetch(FetchMode.JOIN)
 	private List<Loan> loan = new ArrayList<>();
 
 	public Student() {

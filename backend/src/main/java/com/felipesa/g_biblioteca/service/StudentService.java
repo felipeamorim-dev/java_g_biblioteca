@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.felipesa.g_biblioteca.entities.Student;
 import com.felipesa.g_biblioteca.entities.dto.StudentDTO;
+import com.felipesa.g_biblioteca.entities.dto.ViewStudentDTO;
 import com.felipesa.g_biblioteca.repository.StudentRepository;
 import com.felipesa.g_biblioteca.service.exceptions.ResourceNotFoundException;
 
@@ -46,7 +47,8 @@ public class StudentService {
 		}
 	}
 	
-	public StudentDTO update(Integer registration, Student student) {
+	//TODO: Criar classe de converção para retornar apenas os dados do estudante atualizado
+	public StudentDTO update(Integer registration, ViewStudentDTO student) {
 		try {
 			Student obj = repository.findByRegistration(registration);
 			Student std = updateStudent(obj, student);
@@ -60,7 +62,7 @@ public class StudentService {
 		
 	}
 	
-	private Student updateStudent(Student oldStudent, Student newStudent) {
+	private Student updateStudent(Student oldStudent, ViewStudentDTO newStudent) {
 		if(newStudent.getName() != null) oldStudent.setName(newStudent.getName());
 		if(newStudent.getCourse() != null) oldStudent.setCourse(newStudent.getCourse());
 		if(newStudent.getPeriod() != null && newStudent.getPeriod() > 0 && newStudent.getPeriod() <= 10) 
@@ -72,8 +74,8 @@ public class StudentService {
 	public void deleteById(Long id) {
 		try {
 			repository.deleteById(id);	
-		} catch (RuntimeException e) {
-			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			throw new ResourceNotFoundException(id);
 		}
 	}
 	

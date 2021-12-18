@@ -31,16 +31,16 @@ public class CarService {
 	public void insert(Car obj){
 		try {
 			repository.save(obj);
-		} catch (RuntimeException e) {
-			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			throw new ResourceNotFoundException(obj.getId());
 		}
 	}
 	
 	public void deleteById(Long id) {
 		try {
 			repository.deleteById(id);	
-		} catch (RuntimeException e) {
-			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			throw new ResourceNotFoundException(id);
 		}
 	}
 	

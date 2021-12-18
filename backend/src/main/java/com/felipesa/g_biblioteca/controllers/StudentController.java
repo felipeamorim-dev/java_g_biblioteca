@@ -1,5 +1,7 @@
 package com.felipesa.g_biblioteca.controllers;
 
+import java.net.URI;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,9 +12,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.felipesa.g_biblioteca.entities.Student;
 import com.felipesa.g_biblioteca.entities.dto.StudentDTO;
+import com.felipesa.g_biblioteca.entities.dto.ViewStudentDTO;
 import com.felipesa.g_biblioteca.service.StudentService;
 
 @RestController
@@ -32,23 +36,27 @@ public class StudentController {
 	public ResponseEntity<StudentDTO> findByRegistration(@PathVariable Integer registration) {
 		StudentDTO obj = studentService.findByRegistration(registration);
 		//obj = studentService.findById(obj.getId());
-		return ResponseEntity.ok(obj);
+		return ResponseEntity.ok().body(obj);
 	}
 	
 	@PostMapping
 	public ResponseEntity<Void> insert(@RequestBody Student obj) {
 		try {
+		URI uri = ServletUriComponentsBuilder
+				.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(obj.getId())
+				.toUri();
 		studentService.insert(obj);
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.created(uri).build();
 		}catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
 		}
 	}
 	
 	@PutMapping(path = "/registration/{registration}")
-	public ResponseEntity<StudentDTO> update(@PathVariable Integer registration, @RequestBody Student obj){
+	public ResponseEntity<StudentDTO> update(@PathVariable Integer registration, @RequestBody ViewStudentDTO obj){
 		StudentDTO std = studentService.update(registration, obj);
-		return ResponseEntity.ok(std);
+		return ResponseEntity.ok().body(std);
 	}
 	
 	@DeleteMapping(path = "/{id}")

@@ -21,6 +21,7 @@ import com.felipesa.g_biblioteca.repository.BookLoanRepository;
 import com.felipesa.g_biblioteca.repository.BookManagementRepository;
 import com.felipesa.g_biblioteca.repository.LoanRepository;
 import com.felipesa.g_biblioteca.repository.StudentRepository;
+import com.felipesa.g_biblioteca.service.exceptions.ResourceNotFoundException;
 
 
 @Service
@@ -64,7 +65,7 @@ public class LoanService {
 						.collect(Collectors.toList());
 			
 		} catch (RuntimeException e) {
-			e.printStackTrace();
+			throw new ResourceNotFoundException(std.getId());
 		}
 		
 		insertLoan(loan, list);
