@@ -1,7 +1,5 @@
 package com.felipesa.g_biblioteca.controllers;
 
-import java.net.URI;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,12 +11,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.felipesa.g_biblioteca.entities.Student;
 import com.felipesa.g_biblioteca.entities.dto.StudentDTO;
 import com.felipesa.g_biblioteca.entities.dto.ViewStudentDTO;
 import com.felipesa.g_biblioteca.service.StudentService;
+import com.felipesa.g_biblioteca.util.UriUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -51,12 +49,8 @@ public class StudentController {
 	@ApiOperation(value = "Cadastra um estudante")
 	public ResponseEntity<Void> insert(@RequestBody Student obj) {
 		try {
-		URI uri = ServletUriComponentsBuilder
-				.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(obj.getId())
-				.toUri();
 		studentService.insert(obj);
-		return ResponseEntity.created(uri).build();
+		return ResponseEntity.created(UriUtil.of(obj)).build();
 		}catch (IllegalArgumentException e) {
 			return ResponseEntity.notFound().build();
 		}

@@ -22,6 +22,7 @@ import com.felipesa.g_biblioteca.repository.BookManagementRepository;
 import com.felipesa.g_biblioteca.repository.LoanRepository;
 import com.felipesa.g_biblioteca.repository.StudentRepository;
 import com.felipesa.g_biblioteca.service.exceptions.ResourceNotFoundException;
+import com.felipesa.g_biblioteca.service.exceptions.ValidationErroException;
 
 
 @Service
@@ -107,7 +108,7 @@ public class LoanService {
 	}
 	
 	
-	public Loan update(Long id, StatusEnum status) {
+	public LoanDTO update(Long id, StatusEnum status) {
 		BookManagement bmanager = new BookManagement();
 		Loan loan = loanRepository.getById(id);
 		loan.setStatus(status);
@@ -122,11 +123,16 @@ public class LoanService {
 			}
 		}
 		
+		if(status == StatusEnum.BORROWED) {
+			throw new ValidationErroException("Erro no status da ação");
+		}
+		
+		
 		loanRepository.save(loan);
 			
 		} catch (RuntimeException e) {
 			e.getStackTrace();
 		}
-		return loan;
+		return new LoanDTO(loan);
 	}
 }

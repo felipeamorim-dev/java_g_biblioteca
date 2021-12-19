@@ -1,6 +1,5 @@
 package com.felipesa.g_biblioteca.controllers;
 
-import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.felipesa.g_biblioteca.entities.dto.BookLoanDTO;
 import com.felipesa.g_biblioteca.entities.dto.ViewCarDTO;
 import com.felipesa.g_biblioteca.service.CarService;
 import com.felipesa.g_biblioteca.service.LoanService;
 import com.felipesa.g_biblioteca.service.exceptions.ValidationErroException;
+import com.felipesa.g_biblioteca.util.UriUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -49,11 +48,8 @@ public class CarController {
 		if(bookloanDto == null) {
 			throw new ValidationErroException("Erro de validação");	
 		}
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(bookloanDto.getBook().getIsbn())
-				.toUri();
 		loanService.insertCar(bookloanDto);
-		return ResponseEntity.created(uri).build();
+		return ResponseEntity.created(UriUtil.of(bookloanDto)).build();
 	}
 	
 	@DeleteMapping("/car/delete/{id}")
