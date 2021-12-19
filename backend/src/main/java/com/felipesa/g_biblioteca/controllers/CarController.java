@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,8 +21,13 @@ import com.felipesa.g_biblioteca.service.CarService;
 import com.felipesa.g_biblioteca.service.LoanService;
 import com.felipesa.g_biblioteca.service.exceptions.ValidationErroException;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
-@RequestMapping("/car")
+@RequestMapping("/api")
+@Api(value = "Endpoint da API REST para adicionar os livros escolhidos pelo estudante para realizar o emprestimo")
+@CrossOrigin(origins = "*")
 public class CarController {
 	
 	@Autowired
@@ -30,13 +36,15 @@ public class CarController {
 	@Autowired
 	private LoanService loanService;
 	
-	@GetMapping
+	@GetMapping(value = "/car")
+	@ApiOperation(value = "Recupera todos os livros que serão emprestados")
 	public ResponseEntity<List<ViewCarDTO>> getAllCarItens(){
 		List<ViewCarDTO> list = carService.getViewAllCar();
 		return ResponseEntity.ok().body(list);
 	}
 	
-	@PostMapping("/insert")
+	@PostMapping("/car/insert")
+	@ApiOperation(value = "Insere um livro ao carrinho de pedidos de emprestimo")
 	public ResponseEntity<Void> insertCar(@RequestBody BookLoanDTO bookloanDto){
 		if(bookloanDto == null) {
 			throw new ValidationErroException("Erro de validação");	
@@ -48,13 +56,15 @@ public class CarController {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/car/delete/{id}")
+	@ApiOperation(value = "Deleta um item do carrinho de pedidos de emprestimo baseado no id")
 	public ResponseEntity<Void> deleteCar(@PathVariable Long id){
 		carService.deleteById(id);
 		return ResponseEntity.noContent().build();
 	}
 	
-	@DeleteMapping("/delete/all")
+	@DeleteMapping("/car/delete/all")
+	@ApiOperation(value = "Deleta todos os itens do carrinho de pedidos de emprestimo")
 	public ResponseEntity<Void> deleteAllCar(){
 		carService.deleteAll();
 		return ResponseEntity.noContent().build();

@@ -14,24 +14,39 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "tb_books")
+@ApiModel(description = "Modelo base de persistencia na tabela livro")
 public class Book implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(nullable = false, unique = true)
+	@ApiModelProperty(value = "Numero de identificação global de um livro")
 	private String isbn; // Será utilizado o isbn de 10 digitos para identificar os livros
+	
+	@ApiModelProperty(value = "Título do livro")
 	private String name;
+	
+	@ApiModelProperty(value = "Número da edição de publicação")
 	private Integer numberEdition;
+	
+	@ApiModelProperty(value = "Ano de lançamento")
 	private Integer copyright;
+	
+	@ApiModelProperty(value = "Nome dos autores do livro")
 	private String author;
 
 	@OneToMany(mappedBy = "id.book", cascade = CascadeType.PERSIST)
+	@ApiModelProperty(value = "Lista de gerenciamento das quantidades de livros disponíveis")
 	private Set<BookManagement> manager = new HashSet<>();
 
 	@OneToMany(mappedBy = "id.loan", cascade = CascadeType.PERSIST)
+	@ApiModelProperty(value = "Lista dos pedidos de livros adicionados para emprestimos")
 	private Set<BookLoan> bookLoan = new HashSet<>();
 
 	public Book() {

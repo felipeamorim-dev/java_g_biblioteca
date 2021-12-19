@@ -21,24 +21,32 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.felipesa.g_biblioteca.enumtype.StatusEnum;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "tb_loan")
+@ApiModel(description = "Modelo base para persistir as transações de emprestimos de livros")
 public class Loan implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@ApiModelProperty(value = "Id do emprestimo")
 	private Long id;
 
 	@ManyToOne
 	@JoinColumn(name = "student_id")
+	@ApiModelProperty(value = "Dados do Estudante que realizou o emprestimo")
 	private Student student;
 	
 	@Enumerated(EnumType.STRING)
+	@ApiModelProperty(value = "Estado do emprestimo")
 	private StatusEnum status;
 	
 	@OneToMany(mappedBy = "id.loan", cascade = {CascadeType.PERSIST , CascadeType.MERGE}, fetch = FetchType.EAGER)
+	@ApiModelProperty(value = "Livros que serão emprestados")
 	private List<BookLoan> bookLoan = new ArrayList<>();
 
 	public Loan() {

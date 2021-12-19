@@ -13,18 +13,26 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "tb_section")
+@ApiModel(description = "Modelo base da estrutura de dados da tabela de seções que segregam os livros")
 public class Section implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@ApiModelProperty(value = "Id da seção")
 	private Long id;
+	
+	@ApiModelProperty(value = "Nome da seção")
 	private String name;
 	
 	@OneToMany(mappedBy = "id.section", cascade = CascadeType.PERSIST)
+	@ApiModelProperty(value = "Lista das quantidades de livros disponíveis")
 	private Set<BookManagement> manager = new HashSet<>();
 
 	public Section() {

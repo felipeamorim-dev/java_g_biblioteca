@@ -13,24 +13,32 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "tb_car")
+@ApiModel(description = "Modelo base para pesistir no carrinho de emprestimos")
 public class Car implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@ApiModelProperty(value = "Id do item adicionado ao carrinho")
 	private Long id;
 	
 	@ManyToOne
 	@JoinColumn(name = "isbn_id")
+	@ApiModelProperty(value = "Livro adicionado ao carrinho")
 	private Book book;
 	
 	@Temporal(TemporalType.DATE)
+	@ApiModelProperty(value = "Data da realização do emprestimo")
 	private Date loanDate;
 	
 	@Temporal(TemporalType.DATE)
+	@ApiModelProperty(value = "Data de devolução dos livros emprestados")
 	private Date returnDate;
 	
 	public Car() {

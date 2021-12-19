@@ -21,29 +21,41 @@ import org.springframework.lang.NonNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "tb_student")
+@ApiModel(description = "Modelo base da estrutura de dados para persistenicia na tabela de estudantes")
 public class Student implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@ApiModelProperty(value = "Id do Estudante")
 	private Long id;
 
 	@Column(nullable = false)
+	@ApiModelProperty(value = "Número de registro do Estudante")
 	private Integer registration;
 
 	@NonNull
+	@ApiModelProperty(value = "Nome do Estudante")
 	private String name;
+	
 	@NonNull
+	@ApiModelProperty(value = "Curso do Estudante")
 	private String course;
+	
 	@NonNull
+	@ApiModelProperty(value = "Período que está cursando o Estudante")
 	private Integer period;
 	
 	@OneToMany(mappedBy = "student", cascade = { CascadeType.PERSIST, CascadeType.MERGE }, 
 			fetch = FetchType.LAZY)
 	@Fetch(FetchMode.JOIN)
+	@ApiModelProperty(value = "Lista de emprestimos que esse estudante possui")
 	private List<Loan> loan = new ArrayList<>();
 
 	public Student() {
