@@ -38,7 +38,7 @@ http://localhost:8080/swagger-ui.html
 
 Lembrando que esse endereço é valida apenas para a configuraçlão de portas padrão utilizadas pelo Tomcat.
 
-![Alt text](/home/felipeamorim/Documentos/Java/workspaces/ws-projetos/g_biblioteca/doc_api.png)
+![Alt text](https://github.com/felipeamorim-dev/java_g_biblioteca/blob/main/doc_api.png)
 
  
 
