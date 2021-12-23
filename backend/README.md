@@ -13,51 +13,38 @@ Com essa api é possivel realizar o cadastro dos estudantes e mapear os livros q
 - Linguagem Java
 - Framework Spring Boot
 - Maven
+- Toncat
 - Banco de dados H2 e PostgreSQL
 - Postman
+- Swagger API
 
 
 
-## URL de acesso a api
+## URL de acesso a documentação da api
 
 
 
-### Método GET
+A documentação dessa api foi gerada a partir da API Swagger, dessa forma é possivel visualizar todos os endpoints do serviço prestado por essa aplicação. Para isso, execute a aplicação pelo terminal ou utilizando a sua IDE favorita. Pelo terminal, basta acessar a pasta raiz da aplicação e executar o seguinte comando
 
-* /students/{id} -> Recupera os dados sobre o estudante cadastrado.
-* /registration/{registration} ->  Recupera os dados sobre o estudante cadastrado através do seu número de registro.
-* /sections -> Recupera todas as seções da biblioteca.
-* /sections/{id} -> Recupera os dados de apenas uma seção da biblioteca.
-* /books -> Recupera todos os dados sobre os livros de forma paginada.
-* /books/{isbn} -> Recupera os dados de um livro através de seu código de identificação internacional.
-* /loan/{id} -> Recupera os dados sobre o emprestimo realizado para um estudante especifico. 
+```bash
+./mvnw spring-boot:run
+```
 
+A url de acesso a documentação estará localizada em:
 
+```java
+http://localhost:8080/swagger-ui.html
+```
 
-### Método POST
+Lembrando que esse endereço é valida apenas para a configuraçlão de portas padrão utilizadas pelo Tomcat.
 
-* /students -> Realiza a persistencia dos dados do aluno no banco de dados da biblioteca. Os atributos que devem compor o corpo do método são: registro, nome, curso e período.
-* /loan -> Adiciona livros como itens a serem emprestados. No corpo do método deve conter pelo menois o isbn do livro para que internamente seja referenciado corretamento o livro que deseja adiciona a lista de livros emprestados.
-* /loan/create -> Vincula o emprestimo ao aluno iserindo no banco de dados todas as informações pertinentes a transação realizada. Obs: A transação será realizada quando a lista de livros a emprestar não for nula.
-
-
-
-### Método PUT
-
-* /students/registration/{registration} -> Atualiza os dados sobre o estudante no banco de dados.
-
-
-
-### Método DELETE
-
-* /students/{id} -> Retira do banco de dados as informações sobre o aluno
-* /students/{registration} -> Retira do banco de dados as informações sobre o aluno.
+![Alt text](/home/felipeamorim/Documentos/Java/workspaces/ws-projetos/g_biblioteca/doc_api.png)
 
  
 
 ### Instalação
 
-Para realizar a instalação do projeto no perfil de  testar basta realizar realizar o build utilizando o maven, como a seguir:
+Para realizar a instalação do projeto no perfil de  testar basta realizar o build utilizando o maven, como a seguir:
 
 ```java
 mvn clean package
@@ -74,6 +61,30 @@ para rodar a aplicação.
 No perfil de teste é utilizado o banco de dados H2 eno mesmo já possui alguns livros cadastrados para realizar os testes das funcionalidades da api. Para utilizar o PostgreSQL é necessário modificar para dev o perfil de desenvolvimento e modificar o arquivo application-dev.properties. É necessário criar o banco no Postegre (gbibli) e popular a tabelas de livros e seu estoque, como feito na versão de teste. 
 
 Uma observação importante. Esse já possui todas as dependências necessárias para que a aplicação rode, inclusive o servidor tomcat embarcado.
+
+Também podemos rodar a aplicação dentro de um container, paa isso, precisamos criar o arquivo Dockfile com os seguintes comandos
+
+```dockerfile
+FROM openjdk:11-jdk
+VOLUME /tmp
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
+```
+
+Em seguida, podemos criar o container docker com a aplicação executando o seguinte comando pelo terminal
+
+```bash
+docker build -t [nome_do_container]
+```
+
+Após finalizar o processo de build da imagem podemos rodar a imagem em um container com o comando
+
+```bash
+docker run -p 8080 [id_da_imagem/nome_da_imagem]
+```
+
+Agora é possível acessar o local host na porta 8080 com os endpoints definidos na documentação para testar a aplicação.
 
 
 
